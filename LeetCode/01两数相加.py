@@ -49,7 +49,7 @@ class ListNode:
         carry = 0                     #初始化进位为0
 
         while l1 or l2:               #遍历l1和l2，直至为空
-            x = l1.val if l1 else     #如果某个链表已经为空，则补0
+            x = l1.val if l1 else 0    #如果某个链表已经为空，则补0
             y = l2.val if l2 else 0
 
             sum = x + y + carry       #计算当前的和，以及进位
