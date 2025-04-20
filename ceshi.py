@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -49,3 +50,10 @@ def scrape_lottery_results():
 
 if __name__ == "__main__":
     scrape_lottery_results()
+=======
+
+a = 12321
+b = 10
+
+print(a / b)
+>>>>>>> 1a44c1790a3a58411bdaa33e78b74c9675d9af21
