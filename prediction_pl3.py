@@ -75,7 +75,7 @@ def load_and_process_data(filename):
     return scaled_combined_features, scaler
 
 
-def create_sequences(data, look_back=10):
+def create_sequences(data, look_back=30):
     """
     创建时间序列数据
     :param data: 归一化的数据
@@ -99,9 +99,9 @@ def build_lstm_model(input_shape, dropout_rate=0.2):
     """
     model = Sequential([
         Input(shape=input_shape),  # 使用 Input 层定义输入形状
-        LSTM(64, return_sequences=True),  # 第一层 LSTM
+        LSTM(128, return_sequences=True),  # 第一层 LSTM
         Dropout(dropout_rate),  # 随机丢弃层，用来防止过拟合
-        LSTM(64, return_sequences=False),  # 第二层 LSTM
+        LSTM(128, return_sequences=False),  # 第二层 LSTM
         Dropout(dropout_rate),
         Dense(64, activation='relu'),  # 全连接层
         Dense(3, activation='linear')  # 输出层，预测 3 个开奖号码
@@ -118,7 +118,7 @@ def main():
     data, scaler = load_and_process_data(filename)
 
     # 创建时间序列数据
-    look_back = 10
+    look_back = 30
     X, Y = create_sequences(data, look_back)
 
     # 划分训练集和验证集
@@ -129,12 +129,12 @@ def main():
     print(model.summary())  # 打印模型结构
 
     # 使用早停策略
-    early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=50, restore_best_weights=True)
 
     # 训练模型
     model.fit(
         X_train, Y_train,
-        epochs=100, batch_size=32,
+        epochs=100, batch_size=16,
         validation_data=(X_val, Y_val),
         callbacks=[early_stopping],
         verbose=1
